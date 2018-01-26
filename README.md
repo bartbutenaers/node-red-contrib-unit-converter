@@ -32,4 +32,4 @@ The destination unit of the `msg.output` message value, i.e. the value to which 
 The field name in the input message, that will contain the value that needs to be converted.  By default the input value will be located inside the `msg.payload` field.
 
 ### Output field
-The field name in the output message, that will contain the value that has been to be converted.  By default the output value will be located inside the `msg.payload` field.
+The field name in the output message, that will contain the converted value.  By default the output value will be located inside the `msg.payload` field.
