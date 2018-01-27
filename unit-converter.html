@@ -56,6 +56,11 @@
                     var category = data[i];
                     $("<option value='" + category + "'> " + category.charAt(0).toUpperCase() + category.slice(1) + "</option>").appendTo("#node-input-category");
                 }   
+                
+                // Set the 'length' as default category at the start, to make sure that the 'unit' dropdowns are filled correctly
+                if (!node.category) {
+                    node.category = 'length';
+                }
 
                 // When a categorie is already available, make sure it is selected in the dropdown
                 if (node.category) {
@@ -161,4 +166,3 @@
     <p><strong>Output field:</strong><br/>
     The field name in the output message, that will contain the converted value.  By default the output value will be located inside the <code>msg.payload</code> field.</p>
 </script>
-
