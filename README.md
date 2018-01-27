@@ -1,6 +1,12 @@
 # node-red-contrib-unit-converter
 A Node Red node for unit conversions between some common units.
 
+## Install
+Run the following npm command in your Node-RED user directory (typically ~/.node-red):
+```
+npm install node-red-contrib-unit-converter
+```
+
 ## Usage
 This node will convert the `msg.input` value (specified as ***input unit*** X) from the input message, to another `msg.outnput` value (specified as ***output unit*** Y) in the output message.
 
