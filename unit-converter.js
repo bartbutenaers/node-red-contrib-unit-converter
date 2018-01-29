@@ -37,7 +37,7 @@
                 return;
             }
             
-            var convertedValue = convert(msg.payload).from(node.inputUnit).to(node.outputUnit)
+            var convertedValue = convert(inputValue).from(node.inputUnit).to(node.outputUnit)
             
             try {
                 // Set the converted value in the specified message field
