@@ -19,34 +19,54 @@
 
     function UnitConverterNode(config) {
         RED.nodes.createNode(this,config);
-        this.inputUnit   = config.inputUnit;
-        this.outputUnit  = config.outputUnit;
-        this.inputField  = config.inputField;
-        this.outputField = config.outputField;
-        this.name        = config.name;
+        this.inputUnit       = config.inputUnit;
+        this.outputUnit      = config.outputUnit;
+        this.inputField      = config.inputField;
+        this.outputField     = config.outputField;
+        this.inputFieldType  = config.inputFieldType;
+        this.outputFieldType = config.outputFieldType;
+        this.name            = config.name;
 
         var node = this;
 
         node.on("input", function(msg) {
             try {
-                // Get the input value from the specified message field
-                var inputValue = RED.util.getMessageProperty(msg, node.inputField);
+                // Get the input value from the specified input location
+                var inputValue = RED.util.evaluateNodeProperty(node.inputField, node.inputFieldType, this, msg);
             } 
             catch(err) {
                 node.error("Error getting value from msg." + node.inputField + " : " + err.message);
                 return;
             }
             
+            if (NaN(inputValue)) {
+                // Try to convert the value to a number
+                inputValue = Number(inputValue);
+            }
+            
+            if (NaN(inputValue)) {
+                node.error("The input value (" + inputValue + ") cannot be converted to a number");
+                return;
+            }           
+            
             var convertedValue = convert(inputValue).from(node.inputUnit).to(node.outputUnit)
             
             try {
-                // Set the converted value in the specified message field
-                RED.util.setMessageProperty(msg, node.outputField, convertedValue, true);
+                // Set the converted value in the specified output location
+                if (node.outputFieldType === 'msg') {
+                    RED.util.setMessageProperty(msg, node.outputField, convertedValue);
+                    
+                    // Only send an output message, when the output type is 'msg'
+                    node.send(msg);
+                } else if (node.outputFieldType === 'flow') {
+                    node.context().flow.set(node.outputField, convertedValue);
+                } else if (node.outputFieldType === 'global') {
+                    node.context().global.set(node.outputField, convertedValue);
+                }
             } catch(err) {
                 node.error("Error setting value in msg." + node.outputField + " : " + err.message);
+                return;
             }
-
-            node.send(msg);
         });
     }
 
@@ -73,5 +93,4 @@
             res.json(convert().list(req.params.cmd));
         }
     });
-
 }
