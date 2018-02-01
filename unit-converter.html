@@ -20,6 +20,8 @@
             outputUnit: {value:"", required:true},
             inputField: {value:"payload", required:true},
             outputField: {value:"payload", required:true},
+            inputFieldType: {value:"msg"},
+            outputFieldType: {value:"msg"},
             name: {value:""}
         },
         inputs:1,
@@ -30,18 +32,25 @@
         },
         oneditprepare: function() { 
             var node = this;
-        
-            // Show the inputField value in a typedinput element (dropdown with only 'msg')
-            var value = $("#node-input-inputField").val() || '';
-            $("#node-input-typed-inputField").typedInput({types:['msg']});
-            $("#node-input-typed-inputField").typedInput('type','msg');
-            $("#node-input-typed-inputField").typedInput('value',value);
             
-            // Show the outputField value in a typedinput element (dropdown with only 'msg')
-            var value = $("#node-input-outputField").val() || '';
-            $("#node-input-typed-outputField").typedInput({types:['msg']});
-            $("#node-input-typed-outputField").typedInput('type','msg');
-            $("#node-input-typed-outputField").typedInput('value',value);
+            // Show the inputField value in a typedinput element
+            $("#node-input-inputFieldType").val(this.inputFieldType);
+            $("#node-input-inputField").typedInput({
+                default: 'msg',
+                typeField: $("#node-input-inputFieldType"),
+                types:['msg', 'flow', 'global', 'num']
+            });
+
+            // Show the inputField value in a typedinput element
+            $("#node-input-outputFieldType").val(this.outputFieldType);
+            $("#node-input-outputField").typedInput({
+                default: 'msg',
+                typeField: $("#node-input-outputFieldType"),
+                types:['msg', 'flow', 'global']
+            });
+            
+            $("#node-input-inputField").typedInput('type',this.inputFieldType);
+            $("#node-input-outputField").typedInput('type',this.outputFieldType);
 
             // Load the available categories from the server
             $.getJSON('unit-converter/categories', function(data) {
@@ -113,6 +122,7 @@
             
         },
         oneditsave: function() {
+        /*
             // Copy the inputField value from the typedinput element to the inputField element
             var value = $("#node-input-typed-inputField").typedInput('value');
             $("#node-input-inputField").val(value);
@@ -120,6 +130,7 @@
             // Copy the outputField value from the typedinput element to the outputField element
             var value = $("#node-input-typed-outputField").typedInput('value');
             $("#node-input-outputField").val(value);
+            */
         }
     });
 </script>
@@ -138,14 +149,14 @@
         <select id="node-input-outputUnit"></select>
     </div>
     <div class="form-row">
-        <label for="node-input-typed-inputField"><i class="fa fa-list"></i> Input field</label>
-        <input id="node-input-typed-inputField" type="text" style="width: 70%">
-        <input id="node-input-inputField" type="hidden">
+        <label for="node-input-inputField"><i class="fa fa-list"></i> Input field</label>
+        <input id="node-input-inputField" type="text" style="width: 70%">
+        <input id="node-input-inputFieldType" type="hidden">
     </div>
     <div class="form-row">
-        <label for="node-input-typed-outputField"><i class="fa fa-list"></i> Output field</label>
-        <input id="node-input-typed-outputField" type="text" style="width: 70%">
-        <input id="node-input-outputField" type="hidden">
+        <label for="node-input-outputField"><i class="fa fa-list"></i> Output field</label>
+        <input id="node-input-outputField" type="text" style="width: 70%">
+        <input id="node-input-outputFieldType" type="hidden">
     </div>   
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
@@ -165,4 +176,5 @@
     The field name in the input message, that will contain the value that needs to be converted.  By default the input value will be located inside the <code>msg.payload</code> field.</p> 
     <p><strong>Output field:</strong><br/>
     The field name in the output message, that will contain the converted value.  By default the output value will be located inside the <code>msg.payload</code> field.</p>
+    <p>Look at following <a href="https://www.npmjs.com/package/convert-units/" target="_blank">library</a>, for a list of all available units.</p>
 </script>
