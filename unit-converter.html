@@ -18,9 +18,9 @@
             category: {value:"", required:true},
             inputUnit: {value:"", required:true},
             outputUnit: {value:"", required:true},
-            inputField: {value:"payload", required:true},
-            outputField: {value:"payload", required:true},
-            inputFieldType: {value:"msg"},
+            inputField: {value:"payload", validate: RED.validators.typedInput("inputFieldType")},
+            outputField: {value:"payload", validate: RED.validators.typedInput("outputFieldType")},
+            inputFieldType: {value:"msg"},  
             outputFieldType: {value:"msg"},
             name: {value:""}
         },
@@ -33,23 +33,22 @@
         oneditprepare: function() { 
             var node = this;
             
-            // Show the inputField value in a typedinput element
-            $("#node-input-inputFieldType").val(this.inputFieldType);
+            // Show the inputField value in a typedinput element (dropdown with types)
+            $("#node-input-inputFieldType").val(this.inputField);
             $("#node-input-inputField").typedInput({
                 default: 'msg',
                 typeField: $("#node-input-inputFieldType"),
                 types:['msg', 'flow', 'global', 'num']
             });
-
-            // Show the inputField value in a typedinput element
-            $("#node-input-outputFieldType").val(this.outputFieldType);
+            $("#node-input-inputField").typedInput('type',this.inputFieldType);
+       
+            // Show the outputField value in a typedinput element (dropdown with types)
+            $("#node-input-outputFieldType").val(this.outputField);
             $("#node-input-outputField").typedInput({
                 default: 'msg',
                 typeField: $("#node-input-outputFieldType"),
                 types:['msg', 'flow', 'global']
             });
-            
-            $("#node-input-inputField").typedInput('type',this.inputFieldType);
             $("#node-input-outputField").typedInput('type',this.outputFieldType);
 
             // Load the available categories from the server
@@ -124,11 +123,11 @@
         oneditsave: function() {
         /*
             // Copy the inputField value from the typedinput element to the inputField element
-            var value = $("#node-input-typed-inputField").typedInput('value');
+            var value = $("#node-input-inputFieldType").typedInput('value');
             $("#node-input-inputField").val(value);
             
             // Copy the outputField value from the typedinput element to the outputField element
-            var value = $("#node-input-typed-outputField").typedInput('value');
+            var value = $("#node-input-outputFieldType").typedInput('value');
             $("#node-input-outputField").val(value);
             */
         }
@@ -176,5 +175,4 @@
     The field name in the input message, that will contain the value that needs to be converted.  By default the input value will be located inside the <code>msg.payload</code> field.</p> 
     <p><strong>Output field:</strong><br/>
     The field name in the output message, that will contain the converted value.  By default the output value will be located inside the <code>msg.payload</code> field.</p>
-    <p>Look at following <a href="https://www.npmjs.com/package/convert-units/" target="_blank">library</a>, for a list of all available units.</p>
 </script>
