@@ -39,15 +39,17 @@
                 return;
             }
             
-            if (NaN(inputValue)) {
+            if (isNaN(inputValue)) {
                 // Try to convert the value to a number
-                inputValue = Number(inputValue);
-            }
+                var converted = Number(inputValue);
             
-            if (NaN(inputValue)) {
-                node.error("The input value (" + inputValue + ") cannot be converted to a number");
-                return;
-            }           
+                if (isNaN(converted)) {
+                    node.error("The input value (" + inputValue + ") cannot be converted to a number");
+                    return;
+                } 
+                
+                inputValue = converted;
+            }            
             
             var convertedValue = convert(inputValue).from(node.inputUnit).to(node.outputUnit)
             
@@ -73,7 +75,7 @@
     RED.nodes.registerType("unit-converter", UnitConverterNode);
     
     // Make all the available types accessible for the node's config screen
-    RED.httpAdmin.get('/unit-converter/:cmd', /*RED.auth.needsPermission('unitconverter.read'),*/ function(req, res){
+    RED.httpAdmin.get('/unit-converter/:cmd', RED.auth.needsPermission('unitconverter.read'), function(req, res){
         var node = RED.nodes.getNode(req.params.id);
         
         if (req.params.cmd === "categories") {
@@ -93,4 +95,5 @@
             res.json(convert().list(req.params.cmd));
         }
     });
+
 }
