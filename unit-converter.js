@@ -39,31 +39,27 @@
                 return;
             }
             
-            if (isNaN(inputValue)) {
-                // Try to convert the value to a number
-                var converted = Number(inputValue);
+            // Make sure we are dealing with a number, before feeding it to the library.
+            // Useful advice from Dean Cording (https://groups.google.com/d/msg/node-red/8scOe724Zuc/YbWMwduIAgAJ).
+            var convertedInput = parseFloat(inputValue);
+            if (isNaN(convertedInput)){
+                node.error("The input value (" + inputValue + ") is not a number");
+                return null;
+            }         
             
-                if (isNaN(converted)) {
-                    node.error("The input value (" + inputValue + ") cannot be converted to a number");
-                    return;
-                } 
-                
-                inputValue = converted;
-            }            
-            
-            var convertedValue = convert(inputValue).from(node.inputUnit).to(node.outputUnit)
+            var outputValue = convert(convertedInput).from(node.inputUnit).to(node.outputUnit)
             
             try {
                 // Set the converted value in the specified output location
                 if (node.outputFieldType === 'msg') {
-                    RED.util.setMessageProperty(msg, node.outputField, convertedValue);
+                    RED.util.setMessageProperty(msg, node.outputField, outputValue);
                     
                     // Only send an output message, when the output type is 'msg'
                     node.send(msg);
                 } else if (node.outputFieldType === 'flow') {
-                    node.context().flow.set(node.outputField, convertedValue);
+                    node.context().flow.set(node.outputField, outputValue);
                 } else if (node.outputFieldType === 'global') {
-                    node.context().global.set(node.outputField, convertedValue);
+                    node.context().global.set(node.outputField, outputValue);
                 }
             } catch(err) {
                 node.error("Error setting value in msg." + node.outputField + " : " + err.message);
