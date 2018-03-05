@@ -38,7 +38,7 @@
             $("#node-input-inputField").typedInput({
                 default: 'msg',
                 typeField: $("#node-input-inputFieldType"),
-                types:['msg', 'flow', 'global', 'num']
+                types:['msg' /*, 'flow', 'global', 'num'*/]
             });
             $("#node-input-inputField").typedInput('type',this.inputFieldType);
        
@@ -47,7 +47,7 @@
             $("#node-input-outputField").typedInput({
                 default: 'msg',
                 typeField: $("#node-input-outputFieldType"),
-                types:['msg', 'flow', 'global']
+                types:['msg' /*, 'flow', 'global'*/]
             });
             $("#node-input-outputField").typedInput('type',this.outputFieldType);
 
@@ -165,6 +165,7 @@
 
 <script type="text/x-red" data-help-name="unit-converter">
     <p>A node to do unit conversions.</p>
+    <p>See the <a href="https://www.npmjs.com/package/convert-units" target="_blank">convert-units</a> library, for all available units.</p>
     <p><strong>Category:</strong><br/>
     A number of unit categories can be selected.</p>
     <p><strong>Input unit:</strong><br/>
