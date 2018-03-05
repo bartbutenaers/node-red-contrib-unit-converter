@@ -56,11 +56,11 @@
                     
                     // Only send an output message, when the output type is 'msg'
                     node.send(msg);
-                } else if (node.outputFieldType === 'flow') {
+                }/* else if (node.outputFieldType === 'flow') {
                     node.context().flow.set(node.outputField, outputValue);
                 } else if (node.outputFieldType === 'global') {
                     node.context().global.set(node.outputField, outputValue);
-                }
+                }*/
             } catch(err) {
                 node.error("Error setting value in msg." + node.outputField + " : " + err.message);
                 return;
