@@ -25,6 +25,7 @@
         this.outputField     = config.outputField;
         this.inputFieldType  = config.inputFieldType;
         this.outputFieldType = config.outputFieldType;
+        this.outputFieldDecimals = config.outputFieldDecimals;
         this.name            = config.name;
 
         var node = this;
@@ -47,7 +48,12 @@
                 return null;
             }         
             
-            var outputValue = convert(convertedInput).from(node.inputUnit).to(node.outputUnit)
+            var outputValue = convert(convertedInput).from(node.inputUnit).to(node.outputUnit);
+         
+            // Limit decimal places on converted value
+            if (node.outputFieldDecimals && !isNaN(parseInt(node.outputFieldDecimals))) {
+                outputValue = parseFloat(outputValue.toFixed(parseInt(node.outputFieldDecimals)));
+            }
             
             try {
                 // Set the converted value in the specified output location
