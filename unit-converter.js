@@ -19,14 +19,15 @@
 
     function UnitConverterNode(config) {
         RED.nodes.createNode(this,config);
-        this.inputUnit       = config.inputUnit;
-        this.outputUnit      = config.outputUnit;
-        this.inputField      = config.inputField;
-        this.outputField     = config.outputField;
-        this.inputFieldType  = config.inputFieldType;
-        this.outputFieldType = config.outputFieldType;
+        this.inputUnit           = config.inputUnit;
+        this.outputUnit          = config.outputUnit;
+        this.inputField          = config.inputField;
+        this.outputField         = config.outputField;
+        this.inputFieldType      = config.inputFieldType || "msg";
+        this.outputFieldType     = config.outputFieldType || "msg";
         this.outputFieldDecimals = config.outputFieldDecimals;
-        this.name            = config.name;
+        this.roundOutputField    = config.roundOutputField;
+        this.name                = config.name;
 
         var node = this;
 
@@ -51,7 +52,7 @@
             var outputValue = convert(convertedInput).from(node.inputUnit).to(node.outputUnit);
          
             // Limit decimal places on converted value
-            if (node.outputFieldDecimals && !isNaN(parseInt(node.outputFieldDecimals))) {
+            if (node.roundOutputField && node.outputFieldDecimals && !isNaN(parseInt(node.outputFieldDecimals))) {
                 outputValue = parseFloat(outputValue.toFixed(parseInt(node.outputFieldDecimals)));
             }
             
