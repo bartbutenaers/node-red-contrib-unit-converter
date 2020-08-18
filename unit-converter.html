@@ -20,7 +20,8 @@
             outputUnit: {value:"", required:true},
             inputField: {value:"payload", validate: RED.validators.typedInput("inputFieldType")},
             outputField: {value:"payload", validate: RED.validators.typedInput("outputFieldType")},
-            inputFieldType: {value:"msg"},  
+            outputFieldDecimals: {value:""},
+            inputFieldType: {value:"msg"},
             outputFieldType: {value:"msg"},
             name: {value:""}
         },
@@ -156,7 +157,11 @@
         <label for="node-input-outputField"><i class="fa fa-list"></i> Output field</label>
         <input id="node-input-outputField" type="text" style="width: 70%">
         <input id="node-input-outputFieldType" type="hidden">
-    </div>   
+    </div>
+    <div class="form-row">
+        <label for="node-input-outputFieldDecimals"><i class="icon-tag"></i> Output Decimal Places</label>
+        <input type="text" id="node-input-outputFieldDecimals" placeholder="Output Decimal Places">
+    </div>
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
