@@ -20,9 +20,10 @@
             outputUnit: {value:"", required:true},
             inputField: {value:"payload", validate: RED.validators.typedInput("inputFieldType")},
             outputField: {value:"payload", validate: RED.validators.typedInput("outputFieldType")},
-            outputFieldDecimals: {value:""},
             inputFieldType: {value:"msg"},
             outputFieldType: {value:"msg"},
+            roundOutputField: {value: false},
+            outputFieldDecimals: {value: 2},
             name: {value:""}
         },
         inputs:1,
@@ -159,8 +160,11 @@
         <input id="node-input-outputFieldType" type="hidden">
     </div>
     <div class="form-row">
-        <label for="node-input-outputFieldDecimals"><i class="icon-tag"></i> Output Decimal Places</label>
-        <input type="text" id="node-input-outputFieldDecimals" placeholder="Output Decimal Places">
+        <label>&nbsp;</label>
+        <input type="checkbox" id="node-input-roundOutputField" placeholder="" style="display:inline-block; width:auto; vertical-align:baseline;">
+        <label for="node-input-roundOutputField">Round result to </label>
+        <input type="number" id="node-input-outputFieldDecimals" style="width:80px" min="0">
+        <span for="node-input-outputFieldDecimals" style="margin-left:5px;">decimals</span>
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
@@ -181,4 +185,6 @@
     The field name in the input message, that will contain the value that needs to be converted.  By default the input value will be located inside the <code>msg.payload</code> field.</p> 
     <p><strong>Output field:</strong><br/>
     The field name in the output message, that will contain the converted value.  By default the output value will be located inside the <code>msg.payload</code> field.</p>
+    <p><strong>Round result to ... decimals:</strong><br/>	
+    When selected, the output number(s) will be rounded to the specified number of decimals.</p>
 </script>
