@@ -7,6 +7,12 @@ Run the following npm command in your Node-RED user directory (typically ~/.node
 npm install node-red-contrib-unit-converter
 ```
 
+## Support my Node-RED developments
+
+Please buy my wife a coffee to keep her happy, while I am busy developing Node-RED stuff for you ...
+
+<a href="https://www.buymeacoffee.com/bartbutenaers" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy my wife a coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
+
 ## Usage
 This node will convert the `msg.input` value (specified as ***input unit*** X) from the input message, to another `msg.outnput` value (specified as ***output unit*** Y) in the output message.
 
@@ -40,3 +46,6 @@ The field name in the input message, that will contain the value that needs to b
 
 ### Output field
 The field name in the output message, that will contain the converted value.  By default the output value will be located inside the `msg.payload` field.
+
+### Round result to ... decimals
+When selected, the output number(s) will be rounded to the specified number of decimals.
