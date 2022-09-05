@@ -24,6 +24,7 @@
             outputFieldType: {value:"msg"},
             roundOutputField: {value: false},
             outputFieldDecimals: {value: 2},
+            statusType: {value: "none"},
             name: {value:""}
         },
         inputs:1,
@@ -34,6 +35,9 @@
         },
         oneditprepare: function() { 
             var node = this;
+            
+            // Migration of older nodes that don't have a statusType
+            $('#node-input-statusType').val(this.statusType || "none");
             
             // Show the inputField value in a typedinput element (dropdown with types)
             $("#node-input-inputFieldType").val(this.inputField);
@@ -165,6 +169,16 @@
         <label for="node-input-roundOutputField">Round result to </label>
         <input type="number" id="node-input-outputFieldDecimals" style="width:80px" min="0">
         <span for="node-input-outputFieldDecimals" style="margin-left:5px;">decimals</span>
+    </div>
+    <div class="form-row">
+        <label for="node-input-statusType"><i class="fa fa-info-circle"></i> Status</label>
+        <select id="node-input-statusType" style="width: 70%">
+            <option value="none">None</option>
+            <option value="units">Units</option>
+            <option value="input">Input value</option>
+            <option value="output">Output value</option>
+            <option value="inout">Both values</option>
+        </select>
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
