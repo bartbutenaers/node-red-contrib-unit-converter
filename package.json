@@ -1,6 +1,6 @@
 {
     "name"         : "node-red-contrib-unit-converter",
-    "version"      : "0.0.2",
+    "version"      : "0.0.3",
     "description"  : "A Node Red node for unit conversions",
     "dependencies": {
        "convert-units": "2.3.4"
